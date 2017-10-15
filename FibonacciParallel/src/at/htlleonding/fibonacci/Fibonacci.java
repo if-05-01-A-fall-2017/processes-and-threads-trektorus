@@ -23,6 +23,9 @@
  */
 package at.htlleonding.fibonacci;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author P. Bauer <p.bauer@htl-leonding.ac.at>
@@ -37,15 +40,17 @@ public class Fibonacci {
     }
 
     static int getNumberParallel(int n) {
-        Thread t1 = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                
-            }
+        
+        FibonacciThread f = new FibonacciThread(n);
             
-        });
-        return 1;
+        f.start();
+        try {
+           f.join();
+        } 
+        catch (InterruptedException ex) {
+            Logger.getLogger(Fibonacci.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return f.result;
     }
     
 }
